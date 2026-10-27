@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotspot Login - Bratz Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Network Hotspot Gateway - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink: #ff1493;
-            --hot: #ff4fb8;
-            --candy: #ffd1ec;
-            --purple: #5b1a8f;
-            --deep: #2a0a45;
-            --gold: #ffd24a;
-            --cyan: #36e0ff;
+            --bg-deep: #0b0f19;
+            --bg-card: #131b2e;
+            --border-tech: #1e293b;
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.4);
+            --emerald: #10b981;
+            --amber: #f59e0b;
+            --rose: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,232 +27,216 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #fff;
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--deep);
-            background-image:
-                radial-gradient(circle at 20% 15%, rgba(255, 20, 147, 0.55), transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(54, 224, 255, 0.3), transparent 45%),
-                radial-gradient(rgba(255, 255, 255, 0.35) 1.2px, transparent 1.6px),
-                radial-gradient(rgba(255, 210, 74, 0.35) 1px, transparent 1.4px);
-            background-size: auto, auto, 34px 34px, 52px 52px;
-            background-position: 0 0, 0 0, 0 0, 17px 21px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(30, 41, 59, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 41, 59, 0.15) 1px, transparent 1px);
+            background-size: auto, auto, 24px 24px, 24px 24px;
         }
 
         .container {
             position: relative;
             width: 100%;
-            max-width: 420px;
-            padding: 34px 32px 30px;
-            border-radius: 28px;
-            background: linear-gradient(160deg, #7a1fb8 0%, #4a1280 100%);
-            border: 3px solid var(--hot);
-            box-shadow:
-                0 0 0 6px rgba(255, 20, 147, 0.25),
-                0 25px 50px rgba(0, 0, 0, 0.55),
-                0 0 45px rgba(255, 20, 147, 0.45);
-        }
-
-        /* Strip motif leopard di atas kartu */
-        .spots {
-            position: absolute;
-            top: 0; left: 18px; right: 18px;
-            height: 14px;
-            transform: translateY(-50%);
-            border-radius: 999px;
-            background:
-                radial-gradient(ellipse 7px 5px at 12px 7px, #1a0630 55%, transparent 60%) 0 0 / 34px 14px repeat-x,
-                var(--gold);
-            border: 2px solid var(--deep);
+            max-width: 440px;
+            padding: 36px 32px 30px;
+            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-tech);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.1);
         }
 
         .terminal-bar {
             display: flex;
             align-items: center;
             gap: 7px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-tech);
         }
-        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
-        .dot-red { background: var(--pink); }
-        .dot-yellow { background: var(--gold); }
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: var(--rose); }
+        .dot-yellow { background: var(--amber); }
         .dot-green { background: var(--cyan); }
         .terminal-title {
             margin-left: auto;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            color: var(--candy);
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
         }
 
         .header { text-align: center; margin-bottom: 26px; }
 
         .racing-icon {
-            width: 72px; height: 72px;
-            margin: 0 auto 12px;
+            width: 64px; height: 64px;
+            margin: 0 auto 14px;
             display: flex; justify-content: center; align-items: center;
-            font-size: 34px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, var(--gold), #ff9ad5);
-            border: 3px solid #fff;
-            box-shadow: 0 0 0 4px var(--pink), 0 8px 20px rgba(255, 20, 147, 0.6);
-            transform: rotate(-8deg);
+            font-size: 26px;
+            border-radius: 12px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--cyan);
+            box-shadow: 0 0 15px var(--cyan-glow);
         }
 
         .header h1 {
-            font-family: 'Lilita One', sans-serif;
-            font-weight: 400;
-            font-size: 44px;
-            line-height: 1;
-            letter-spacing: 0.02em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 1.1;
+            letter-spacing: 0.05em;
             color: #fff;
-            -webkit-text-stroke: 2px var(--deep);
-            paint-order: stroke fill;
-            text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--deep);
-            transform: rotate(-2deg);
-            margin-bottom: 14px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
         .header p {
             display: inline-block;
-            padding: 4px 14px;
-            border-radius: 999px;
-            background: var(--gold);
-            color: var(--deep);
-            font-size: 12px;
+            padding: 3px 12px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--emerald);
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
-        .form-group { margin-bottom: 16px; }
+        .form-group { margin-bottom: 18px; }
 
         .form-group label {
             display: block;
             margin-bottom: 6px;
-            padding-left: 6px;
-            color: var(--candy);
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 12px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .form-group input {
             width: 100%;
-            padding: 13px 18px;
-            background: #fff0f9;
-            border: 2px solid var(--hot);
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: 600;
-            font-family: 'Quicksand', sans-serif;
-            color: var(--deep);
+            padding: 12px 16px;
+            background: #090d16;
+            border: 1px solid var(--border-tech);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-main);
             outline: none;
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: all 0.2s ease;
         }
-        .form-group input::placeholder { color: #b07ac9; font-weight: 500; }
+        .form-group input::placeholder { color: #475569; }
         .form-group input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(255, 210, 74, 0.5), 0 0 18px rgba(255, 79, 184, 0.7);
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px var(--cyan-glow);
         }
 
         .btn {
             width: 100%;
-            margin-top: 6px;
-            padding: 14px;
-            border: 3px solid #fff;
-            border-radius: 999px;
-            background: linear-gradient(180deg, #ff6ec7 0%, var(--pink) 55%, #d10a78 100%);
+            margin-top: 8px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--cyan), #0284c7);
             color: #fff;
-            font-family: 'Lilita One', sans-serif;
-            font-size: 22px;
-            letter-spacing: 0.08em;
-            text-shadow: 0 2px 0 rgba(42, 10, 69, 0.6);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             cursor: pointer;
-            box-shadow: 0 6px 0 var(--deep), 0 10px 22px rgba(255, 20, 147, 0.55);
-            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            transition: all 0.2s ease;
         }
-        .btn:hover { filter: brightness(1.08); }
-        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--deep), 0 4px 12px rgba(255, 20, 147, 0.5); }
-        .btn:disabled { background: #8a6aa6; border-color: #c9b3dc; color: #e6d8f0; text-shadow: none; box-shadow: 0 4px 0 var(--deep); cursor: not-allowed; }
+        .btn:hover { filter: brightness(1.1); box-shadow: 0 6px 16px rgba(6, 182, 212, 0.5); }
+        .btn:active { transform: translateY(1px); }
+        .btn:disabled { background: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
 
         .message {
-            padding: 12px 16px;
-            border-radius: 18px;
+            padding: 12px 14px;
+            border-radius: 8px;
             margin-top: 16px;
             display: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             text-align: center;
         }
-        .message.success { background: #d9fff0; color: #0a6b45; border: 2px solid #2fd69a; }
-        .message.error { background: #ffe0ec; color: #a10a47; border: 2px solid var(--pink); }
-        .message.info { background: #e3f8ff; color: #0a5f7a; border: 2px solid var(--cyan); }
+        .message.success { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .message.error { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+        .message.info { background: rgba(6, 182, 212, 0.15); color: var(--cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
 
-        .register-link { text-align: center; margin-top: 22px; color: var(--candy); font-size: 14px; font-weight: 600; }
-        .register-link a { color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 2px dashed var(--gold); }
-        .register-link a:hover { color: #fff; border-color: #fff; }
+        .register-link { text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 12px; }
+        .register-link a { color: var(--cyan); font-weight: 700; text-decoration: none; }
+        .register-link a:hover { text-decoration: underline; }
 
         .loading {
-            display: inline-block; width: 14px; height: 14px;
-            border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 50%; border-top-color: #fff;
+            display: inline-block; width: 12px; height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #fff;
             animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .status-check {
-            margin-top: 16px; padding: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px dashed var(--hot);
-            border-radius: 20px;
+            margin-top: 16px; padding: 14px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed var(--border-tech);
+            border-radius: 8px;
             display: none;
         }
         .status-check.show { display: block; }
         .status-check input {
-            width: calc(100% - 64px); padding: 10px 14px;
-            background: #fff0f9; border: 2px solid var(--hot); border-radius: 999px;
-            color: var(--deep); margin-right: 6px; outline: none;
-            font-size: 13px; font-weight: 600; font-family: 'Quicksand', sans-serif;
+            width: calc(100% - 64px); padding: 9px 12px;
+            background: #090d16; border: 1px solid var(--border-tech); border-radius: 6px;
+            color: var(--text-main); margin-right: 6px; outline: none;
+            font-size: 12px; font-family: 'JetBrains Mono', monospace;
         }
-        .status-check input:focus { border-color: var(--gold); }
+        .status-check input:focus { border-color: var(--cyan); }
         .status-check button {
-            padding: 10px 16px; background: var(--gold); color: var(--deep);
-            border: 2px solid #fff; border-radius: 999px; cursor: pointer;
-            font-weight: 700; font-size: 13px; font-family: 'Quicksand', sans-serif;
-            transition: transform 0.1s ease;
+            padding: 9px 14px; background: var(--border-tech); color: var(--text-main);
+            border: 1px solid #475569; border-radius: 6px; cursor: pointer;
+            font-weight: 700; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
         }
-        .status-check button:hover { transform: scale(1.05); }
+        .status-check button:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
 
-        .status-result { margin-top: 10px; padding: 10px 14px; border-radius: 16px; font-size: 12px; font-weight: 700; display: none; }
-        .status-result.approved { background: #d9fff0; color: #0a6b45; border: 2px solid #2fd69a; }
-        .status-result.pending { background: #fff3cf; color: #8a5a00; border: 2px solid var(--gold); }
-        .status-result.rejected { background: #ffe0ec; color: #a10a47; border: 2px solid var(--pink); }
-        .status-result.not-found { background: #efe5f7; color: #5b1a8f; border: 2px solid #b07ac9; }
+        .status-result { margin-top: 10px; padding: 10px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; display: none; }
+        .status-result.approved { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-result.pending { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .status-result.rejected { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+        .status-result.not-found { background: rgba(148, 163, 184, 0.15); color: var(--text-muted); border: 1px solid var(--border-tech); }
 
         .toggle-status {
-            background: none; border: none; color: var(--candy); cursor: pointer;
-            font-size: 13px; font-weight: 700; font-family: 'Quicksand', sans-serif;
-            text-decoration: underline wavy var(--hot); text-underline-offset: 4px;
+            background: none; border: none; color: var(--text-muted); cursor: pointer;
+            font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+            text-decoration: underline; letter-spacing: 0.05em;
         }
-        .toggle-status:hover { color: #fff; }
+        .toggle-status:hover { color: var(--cyan); }
 
         .btn:focus-visible, .toggle-status:focus-visible, .status-check button:focus-visible {
-            outline: 3px solid var(--gold); outline-offset: 3px;
+            outline: 2px solid var(--cyan); outline-offset: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="spots"></div>
-
-        <!-- Bar atas -->
+        <!-- Bar atas terminal -->
         <div class="terminal-bar">
             <div class="terminal-dot dot-red"></div>
             <div class="terminal-dot dot-yellow"></div>
             <div class="terminal-dot dot-green"></div>
-            <div class="terminal-title">💋 hotspot-auth</div>
+            <div class="terminal-title">gateway://auth-session</div>
         </div>
 
         <div class="header">
-            <div class="racing-icon">💄</div>
-            <h1>Bratz Hotspot</h1>
-            <p>✨ Passion for WiFi ✨</p>
+            <div class="racing-icon">⚡</div>
+            <h1>Network Gateway</h1>
+            <p>Secure Hotspot Auth</p>
         </div>
 
         <!-- FORM LOGIN MIKROTIK NATIVE ACTION -->
@@ -259,7 +246,7 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="" required placeholder="Masukkan username driver">
+                <input type="text" id="username" name="username" value="" required placeholder="Masukkan username">
             </div>
 
             <div class="form-group">
@@ -268,28 +255,28 @@
             </div>
 
             <button type="submit" class="btn" id="submitBtn">
-                <span id="btnText">MASUK</span>
+                <span id="btnText">Connect</span>
             </button>
         </form>
 
         <div class="message" id="message"></div>
 
         <div class="status-check" id="statusCheck">
-            <p style="margin-bottom: 8px; color: #ffd1ec; font-size: 13px; font-weight: 700;">Cek Telemetri Registrasi:</p>
+            <p style="margin-bottom: 8px; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase;">Cek Status Akses:</p>
             <div style="display: flex;">
-                <input type="text" id="checkUsername" placeholder="Username Driver">
+                <input type="text" id="checkUsername" placeholder="Username...">
                 <button type="button" onclick="checkStatus()">Cek</button>
             </div>
             <div class="status-result" id="statusResult"></div>
         </div>
 
         <div class="register-link">
-            Belum punya akun? <a href="register.html">Registrasi</a>
+            Belum punya akses? <a href="register.html">Registrasi di sini</a>
         </div>
 
-        <div style="text-align: center; margin-top: 16px;">
+        <div style="text-align: center; margin-top: 14px;">
             <button type="button" class="toggle-status" onclick="toggleStatusCheck()">
-                Cek status registrasi
+                [ Cek Status Registrasi ]
             </button>
         </div>
     </div>
@@ -316,7 +303,7 @@
             };
 
             submitBtn.disabled = true;
-            btnText.innerHTML = '<span class="loading"></span> Connecting Telemetry...';
+            btnText.innerHTML = '<span class="loading"></span> Verifying...';
 
             try {
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
@@ -330,22 +317,22 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    showMessage(`System initialized, Driver ${data.user.name}! Login berhasil.`, 'success');
+                    showMessage(`Akses diizinkan, Driver ${data.user.name}! Login berhasil.`, 'success');
 
                     setTimeout(() => {
-                        showMessage('Masuk ke jalur utama...', 'info');
+                        showMessage('Menghubungkan ke jaringan...', 'info');
                         HTMLFormElement.prototype.submit.call(form);
                     }, 1500);
                 } else {
                     showMessage(data.message, 'error');
                     submitBtn.disabled = false;
-                    btnText.textContent = 'MASUK';
+                    btnText.textContent = 'Connect';
                 }
             } catch (error) {
                 console.error(error);
                 showMessage('Terjadi kesalahan koneksi ke server backend.', 'error');
                 submitBtn.disabled = false;
-                btnText.textContent = 'MASUK';
+                btnText.textContent = 'Connect';
             }
         });
 
@@ -358,7 +345,7 @@
             const statusResult = document.getElementById('statusResult');
 
             if (!username) {
-                statusResult.textContent = 'Masukkan username driver terlebih dahulu';
+                statusResult.textContent = 'Masukkan username terlebih dahulu';
                 statusResult.className = 'status-result not-found';
                 statusResult.style.display = 'block';
                 return;
@@ -374,9 +361,9 @@
                     statusResult.style.display = 'block';
 
                     if (data.status === 'pending') {
-                        statusResult.textContent += ' - Menunggu akses dari System (Admin)';
+                        statusResult.textContent += ' - Menunggu persetujuan Admin';
                     } else if (data.status === 'approved') {
-                        statusResult.textContent += ' - Siap terhubung ke jaringan';
+                        statusResult.textContent += ' - Siap terhubung';
                     } else if (data.status === 'rejected') {
                         statusResult.textContent += ' - Akses ditolak';
                     }
