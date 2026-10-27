@@ -5,198 +5,221 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bratz Hotspot Gateway - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink: #ff1493;
-            --hot: #ff4fb8;
-            --candy: #ffd1ec;
-            --purple: #5b1a8f;
-            --deep: #2a0a45;
-            --gold: #ffd24a;
-            --cyan: #36e0ff;
-            --mint: #2fd69a;
+            --bg-deep: #090d16;
+            --bg-panel: #111827;
+            --border-tech: #1e293b;
+            --accent-cyan: #00f0ff;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         body {
             min-height: 100vh;
-            color: #fff;
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--deep);
-            background-image:
-                radial-gradient(circle at 15% 10%, rgba(255, 20, 147, 0.5), transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(54, 224, 255, 0.25), transparent 40%),
-                radial-gradient(rgba(255, 255, 255, 0.3) 1.2px, transparent 1.6px),
-                radial-gradient(rgba(255, 210, 74, 0.3) 1px, transparent 1.4px);
-            background-size: auto, auto, 34px 34px, 52px 52px;
-            background-position: 0 0, 0 0, 0 0, 17px 21px;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
             background-attachment: fixed;
         }
-        .mono { font-family: 'Quicksand', sans-serif; font-weight: 700; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Header */
+        /* Header Cyber Styling */
         .brand {
-            font-family: 'Lilita One', sans-serif;
-            font-weight: 400;
-            font-size: 34px;
-            line-height: 1.1;
-            letter-spacing: 0.02em;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 26px;
+            letter-spacing: 0.05em;
             color: #fff;
-            -webkit-text-stroke: 2px var(--deep);
-            paint-order: stroke fill;
-            text-shadow: 3px 3px 0 var(--pink), 5px 5px 0 var(--deep);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
         .tagline {
             display: inline-block;
-            margin-top: 10px;
-            padding: 3px 14px;
-            border-radius: 999px;
-            background: var(--gold);
-            color: var(--deep);
-            font-size: 12px;
-            font-weight: 700;
+            margin-top: 6px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
-        .head-line { border-bottom: 3px dashed var(--hot); }
+        .head-line { border-bottom: 1px solid var(--border-tech); }
 
         .btn-refresh {
-            padding: 10px 20px;
-            border: 3px solid #fff;
-            border-radius: 999px;
-            background: linear-gradient(180deg, #ff6ec7 0%, var(--pink) 55%, #d10a78 100%);
-            color: #fff;
-            font-family: 'Lilita One', sans-serif;
-            font-size: 15px;
+            padding: 8px 18px;
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 6px;
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 240, 255, 0.05) 100%);
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
             letter-spacing: 0.05em;
-            text-shadow: 0 2px 0 rgba(42, 10, 69, 0.6);
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--deep), 0 8px 18px rgba(255, 20, 147, 0.5);
-            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            transition: all 0.2s ease;
         }
-        .btn-refresh:hover { filter: brightness(1.08); }
-        .btn-refresh:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--deep); }
+        .btn-refresh:hover { 
+            background: rgba(0, 240, 255, 0.25);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            border-color: var(--accent-cyan);
+        }
+        .btn-refresh:active { transform: translateY(1px); }
 
-        /* Metric cards */
+        /* Metric cards - Tactical Display */
         .metric {
-            padding: 18px 20px;
-            border-radius: 24px;
-            background: linear-gradient(160deg, #7a1fb8 0%, #4a1280 100%);
-            border: 3px solid var(--hot);
-            box-shadow: 0 8px 0 var(--deep), 0 14px 26px rgba(255, 20, 147, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-tech);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-        .metric .label { font-size: 13px; font-weight: 700; color: var(--candy); }
+        .metric::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 3px; height: 100%;
+        }
+        .metric.total::before { background: var(--accent-cyan); }
+        .metric.pending::before { background: var(--accent-amber); }
+        .metric.approved::before { background: var(--accent-emerald); }
+        .metric.rejected::before { background: var(--accent-rose); }
+
+        .metric .label { 
+            font-size: 12px; 
+            font-weight: 600; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em;
+            font-family: 'JetBrains Mono', monospace;
+        }
         .metric .num {
-            margin-top: 6px;
-            font-family: 'Lilita One', sans-serif;
-            font-size: 44px;
+            margin-top: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 38px;
+            font-weight: 800;
             line-height: 1;
-            -webkit-text-stroke: 2px var(--deep);
-            paint-order: stroke fill;
-            text-shadow: 3px 3px 0 var(--deep);
         }
-        .metric.total .num { color: #fff; }
-        .metric.pending { border-color: var(--gold); }
-        .metric.pending .num { color: var(--gold); }
-        .metric.approved { border-color: var(--mint); }
-        .metric.approved .num { color: var(--mint); }
-        .metric.rejected { border-color: #ff5a7d; }
-        .metric.rejected .num { color: #ff5a7d; }
+        .metric.total .num { color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        .metric.pending .num { color: var(--accent-amber); text-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
+        .metric.approved .num { color: var(--accent-emerald); text-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+        .metric.rejected .num { color: var(--accent-rose); text-shadow: 0 0 10px rgba(244, 63, 94, 0.3); }
 
         /* Table panel */
         .panel {
             position: relative;
-            padding: 28px 24px 22px;
-            border-radius: 28px;
-            background: linear-gradient(160deg, #6a1aa3 0%, #43106f 100%);
-            border: 3px solid var(--hot);
-            box-shadow: 0 0 0 6px rgba(255, 20, 147, 0.2), 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 20, 147, 0.35);
+            padding: 24px;
+            border-radius: 12px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-tech);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         .spots {
-            position: absolute;
-            top: 0; left: 22px; right: 22px;
-            height: 14px;
-            transform: translateY(-50%);
-            border-radius: 999px;
-            background:
-                radial-gradient(ellipse 7px 5px at 12px 7px, #1a0630 55%, transparent 60%) 0 0 / 34px 14px repeat-x,
-                var(--gold);
-            border: 2px solid var(--deep);
+            display: none; /* Replaced with subtle tech badge */
         }
         .panel h2 {
-            display: inline-block;
-            margin-bottom: 16px;
-            font-family: 'Lilita One', sans-serif;
-            font-weight: 400;
-            font-size: 22px;
-            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.05em;
             color: #fff;
-            text-shadow: 2px 2px 0 var(--pink);
+            text-transform: uppercase;
         }
-        thead tr { border-bottom: 3px dashed var(--hot) !important; }
-        thead th { color: var(--gold) !important; font-size: 13px; font-weight: 700; }
+        .panel h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+        thead tr { border-bottom: 1px solid var(--border-tech) !important; }
+        thead th { color: var(--text-muted) !important; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; }
 
-        /* Gaya baris, badge, dan tombol tabel */
+        /* Row styling and status indicators */
         #userTableBody { font-size: 13px; }
-        .row { border-bottom: 2px dashed rgba(255, 79, 184, 0.3); transition: background 0.15s ease; }
-        .row:hover { background: rgba(255, 79, 184, 0.14); }
-        .cell-name { color: #fff; font-weight: 700; }
-        .cell-user { color: var(--gold); font-weight: 700; }
-        .cell-contact { color: var(--candy); }
-        .cell-date { color: #d9b8f0; }
-        .msg-empty { color: #d9b8f0; }
-        .msg-error { color: #ff8fb0; font-weight: 700; }
+        .row { border-bottom: 1px solid rgba(30, 41, 59, 0.6); transition: background 0.15s ease; }
+        .row:hover { background: rgba(0, 240, 255, 0.03); }
+        .cell-name { color: #fff; font-weight: 600; font-size: 14px; }
+        .cell-user { color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+        .cell-contact { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+        .cell-date { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+        .msg-empty { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+        .msg-error { color: var(--accent-rose); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
 
         .badge {
-            display: inline-block;
-            padding: 3px 12px;
-            border-radius: 999px;
-            border: 2px solid;
-            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid;
+            font-size: 11px;
             font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.05em;
         }
-        .badge-ok   { background: #d9fff0; color: #0a6b45; border-color: var(--mint); }
-        .badge-no   { background: #ffe0ec; color: #a10a47; border-color: var(--pink); }
-        .badge-wait { background: #fff3cf; color: #8a5a00; border-color: var(--gold); }
+        .badge-ok   { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+        .badge-no   { background: rgba(244, 63, 94, 0.1); color: #fb7185; border-color: rgba(244, 63, 94, 0.3); }
+        .badge-wait { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
 
         .act {
-            padding: 6px 14px;
-            border: 2px solid #fff;
-            border-radius: 999px;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 12px;
+            padding: 5px 12px;
+            border: 1px solid;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 700;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            box-shadow: 0 3px 0 var(--deep);
-            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+            transition: all 0.2s ease;
         }
-        .act:hover { filter: brightness(1.1); }
-        .act:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
-        .act-approve { background: linear-gradient(180deg, #5cf0bb, var(--mint)); color: #05452c; }
-        .act-reject  { background: linear-gradient(180deg, #ff6ec7, var(--pink)); color: #fff; }
-        .act-drop    { background: #3a1260; color: var(--candy); border-color: var(--hot); }
-        .act-drop:hover { background: #8a0b4f; color: #fff; }
+        .act:hover { filter: brightness(1.2); }
+        .act:active { transform: translateY(1px); }
+        .act-approve { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+        .act-reject  { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); }
+        .act-drop    { background: rgba(244, 63, 94, 0.15); color: #fb7185; border-color: rgba(244, 63, 94, 0.4); }
+        .act-drop:hover { background: rgba(244, 63, 94, 0.3); }
 
-        .btn-refresh:focus-visible, .act:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+        .btn-refresh:focus-visible, .act:focus-visible { outline: 1px solid var(--accent-cyan); outline-offset: 2px; }
     </style>
 </head>
 <body class="p-6">
-    <div class="max-w-7xl mx-auto space-y-8">
+    <div class="max-w-7xl mx-auto space-y-6">
 
         <!-- Header -->
         <div class="flex justify-between items-center head-line pb-5">
             <div>
                 <h1 class="brand flex items-center gap-3">
-                    <span class="w-4 h-4 rounded-full animate-pulse" style="background: var(--gold); box-shadow: 0 0 14px var(--gold);"></span>
-                    BRATZ HOTSPOT ADMIN
+                    <span class="w-2.5 h-2.5 rounded-full animate-pulse" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span>
+                    GATEWAY // ADMIN.SYS
                 </h1>
-                <p class="tagline">💋 RouterOS Interface: wlan1-hotspot</p>
+                <p class="tagline">INTERFACE: wlan1-hotspot [ SECURE_CORE ]</p>
             </div>
             <button onclick="loadUsers()" class="btn-refresh flex items-center gap-2">
-                🔄 REFRESH DATA
+                <span>[⚡]</span> REFRESH DATA
             </button>
         </div>
 
         <!-- Metric Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="metric total">
                 <div class="label">Total Registrations</div>
                 <div class="num" id="totalCount">0</div>
@@ -218,7 +241,7 @@
         <!-- Table Section -->
         <div class="panel">
             <div class="spots"></div>
-            <h2>✨ Subscriber Active Session Table ✨</h2>
+            <h2>Subscriber Active Session Table</h2>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -233,7 +256,7 @@
                     </thead>
                     <tbody id="userTableBody" class="text-xs mono">
                         <tr>
-                            <td colspan="5" class="p-4 text-center msg-empty">Memuat data dari Upstash Redis...</td>
+                            <td colspan="5" class="p-6 text-center msg-empty">Memuat data dari Upstash Redis...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -249,7 +272,7 @@
                 const data = await response.json();
 
                 if (!data.success || !data.users) {
-                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Gagal mengambil data pengguna.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-6 text-center msg-error">Gagal mengambil data pengguna.</td></tr>`;
                     return;
                 }
 
@@ -262,7 +285,7 @@
                 document.getElementById('rejectedCount').textContent = users.filter(u => u.status === 'rejected').length;
 
                 if (users.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-empty">Belum ada user mendaftar.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-6 text-center msg-empty">Belum ada user mendaftar.</td></tr>`;
                     return;
                 }
 
@@ -270,28 +293,28 @@
                 tableBody.innerHTML = users.map(user => {
                     let statusBadge = '';
                     if (user.status === 'approved') {
-                        statusBadge = `<span class="badge badge-ok">ACCEPTED</span>`;
+                        statusBadge = `<span class="badge badge-ok">● ACTIVE</span>`;
                     } else if (user.status === 'rejected') {
-                        statusBadge = `<span class="badge badge-no">REJECTED</span>`;
+                        statusBadge = `<span class="badge badge-no">■ BLOCKED</span>`;
                     } else {
-                        statusBadge = `<span class="badge badge-wait">PENDING</span>`;
+                        statusBadge = `<span class="badge badge-wait">▲ PENDING</span>`;
                     }
 
                     const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleString('id-ID') : '-';
 
                     return `
                         <tr class="row">
-                            <td class="p-3">
+                            <td class="p-3.5">
                                 <div class="cell-name">${user.name || '-'}</div>
-                                <div class="cell-user">user: ${user.username}</div>
+                                <div class="cell-user">USR: ${user.username}</div>
                             </td>
-                            <td class="p-3 cell-contact">
+                            <td class="p-3.5 cell-contact">
                                 <div>${user.email || '-'}</div>
                                 <div>${user.phone || '-'}</div>
                             </td>
-                            <td class="p-3">${statusBadge}</td>
-                            <td class="p-3 cell-date">${dateStr}</td>
-                            <td class="p-3 text-right space-x-2">
+                            <td class="p-3.5">${statusBadge}</td>
+                            <td class="p-3.5 cell-date">${dateStr}</td>
+                            <td class="p-3.5 text-right space-x-2">
                                 ${user.status === 'pending' ? `
                                     <button onclick="approveUser('${user.username}')" class="act act-approve">APPROVE</button>
                                     <button onclick="rejectUser('${user.username}')" class="act act-reject">REJECT</button>
@@ -304,7 +327,7 @@
 
             } catch (err) {
                 console.error(err);
-                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Terjadi kesalahan koneksi ke API.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="p-6 text-center msg-error">Terjadi kesalahan koneksi ke API.</td></tr>`;
             }
         }
 
