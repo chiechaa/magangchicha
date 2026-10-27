@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bratz Hotspot Gateway - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff1493;
+            --hot: #ff4fb8;
+            --candy: #ffd1ec;
+            --purple: #5b1a8f;
+            --deep: #2a0a45;
+            --gold: #ffd24a;
+            --cyan: #36e0ff;
+            --mint: #2fd69a;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--deep);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(255, 20, 147, 0.5), transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(54, 224, 255, 0.25), transparent 40%),
+                radial-gradient(rgba(255, 255, 255, 0.3) 1.2px, transparent 1.6px),
+                radial-gradient(rgba(255, 210, 74, 0.3) 1px, transparent 1.4px);
+            background-size: auto, auto, 34px 34px, 52px 52px;
+            background-position: 0 0, 0 0, 0 0, 17px 21px;
+            background-attachment: fixed;
+        }
+        .mono { font-family: 'Quicksand', sans-serif; font-weight: 700; }
+
+        /* Header */
+        .brand {
+            font-family: 'Lilita One', sans-serif;
+            font-weight: 400;
+            font-size: 34px;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            color: #fff;
+            -webkit-text-stroke: 2px var(--deep);
+            paint-order: stroke fill;
+            text-shadow: 3px 3px 0 var(--pink), 5px 5px 0 var(--deep);
+        }
+        .tagline {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 14px;
+            border-radius: 999px;
+            background: var(--gold);
+            color: var(--deep);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .head-line { border-bottom: 3px dashed var(--hot); }
+
+        .btn-refresh {
+            padding: 10px 20px;
+            border: 3px solid #fff;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #ff6ec7 0%, var(--pink) 55%, #d10a78 100%);
+            color: #fff;
+            font-family: 'Lilita One', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.05em;
+            text-shadow: 0 2px 0 rgba(42, 10, 69, 0.6);
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--deep), 0 8px 18px rgba(255, 20, 147, 0.5);
+            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+        }
+        .btn-refresh:hover { filter: brightness(1.08); }
+        .btn-refresh:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--deep); }
+
+        /* Metric cards */
+        .metric {
+            padding: 18px 20px;
+            border-radius: 24px;
+            background: linear-gradient(160deg, #7a1fb8 0%, #4a1280 100%);
+            border: 3px solid var(--hot);
+            box-shadow: 0 8px 0 var(--deep), 0 14px 26px rgba(255, 20, 147, 0.3);
+        }
+        .metric .label { font-size: 13px; font-weight: 700; color: var(--candy); }
+        .metric .num {
+            margin-top: 6px;
+            font-family: 'Lilita One', sans-serif;
+            font-size: 44px;
+            line-height: 1;
+            -webkit-text-stroke: 2px var(--deep);
+            paint-order: stroke fill;
+            text-shadow: 3px 3px 0 var(--deep);
+        }
+        .metric.total .num { color: #fff; }
+        .metric.pending { border-color: var(--gold); }
+        .metric.pending .num { color: var(--gold); }
+        .metric.approved { border-color: var(--mint); }
+        .metric.approved .num { color: var(--mint); }
+        .metric.rejected { border-color: #ff5a7d; }
+        .metric.rejected .num { color: #ff5a7d; }
+
+        /* Table panel */
+        .panel {
+            position: relative;
+            padding: 28px 24px 22px;
+            border-radius: 28px;
+            background: linear-gradient(160deg, #6a1aa3 0%, #43106f 100%);
+            border: 3px solid var(--hot);
+            box-shadow: 0 0 0 6px rgba(255, 20, 147, 0.2), 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 20, 147, 0.35);
+        }
+        .spots {
+            position: absolute;
+            top: 0; left: 22px; right: 22px;
+            height: 14px;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background:
+                radial-gradient(ellipse 7px 5px at 12px 7px, #1a0630 55%, transparent 60%) 0 0 / 34px 14px repeat-x,
+                var(--gold);
+            border: 2px solid var(--deep);
+        }
+        .panel h2 {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-family: 'Lilita One', sans-serif;
+            font-weight: 400;
+            font-size: 22px;
+            letter-spacing: 0.03em;
+            color: #fff;
+            text-shadow: 2px 2px 0 var(--pink);
+        }
+        thead tr { border-bottom: 3px dashed var(--hot) !important; }
+        thead th { color: var(--gold) !important; font-size: 13px; font-weight: 700; }
+
+        /* Gaya baris, badge, dan tombol tabel */
+        #userTableBody { font-size: 13px; }
+        .row { border-bottom: 2px dashed rgba(255, 79, 184, 0.3); transition: background 0.15s ease; }
+        .row:hover { background: rgba(255, 79, 184, 0.14); }
+        .cell-name { color: #fff; font-weight: 700; }
+        .cell-user { color: var(--gold); font-weight: 700; }
+        .cell-contact { color: var(--candy); }
+        .cell-date { color: #d9b8f0; }
+        .msg-empty { color: #d9b8f0; }
+        .msg-error { color: #ff8fb0; font-weight: 700; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 999px;
+            border: 2px solid;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-ok   { background: #d9fff0; color: #0a6b45; border-color: var(--mint); }
+        .badge-no   { background: #ffe0ec; color: #a10a47; border-color: var(--pink); }
+        .badge-wait { background: #fff3cf; color: #8a5a00; border-color: var(--gold); }
+
+        .act {
+            padding: 6px 14px;
+            border: 2px solid #fff;
+            border-radius: 999px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--deep);
+            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+        }
+        .act:hover { filter: brightness(1.1); }
+        .act:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--deep); }
+        .act-approve { background: linear-gradient(180deg, #5cf0bb, var(--mint)); color: #05452c; }
+        .act-reject  { background: linear-gradient(180deg, #ff6ec7, var(--pink)); color: #fff; }
+        .act-drop    { background: #3a1260; color: var(--candy); border-color: var(--hot); }
+        .act-drop:hover { background: #8a0b4f; color: #fff; }
+
+        .btn-refresh:focus-visible, .act:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center head-line pb-5">
+            <div>
+                <h1 class="brand flex items-center gap-3">
+                    <span class="w-4 h-4 rounded-full animate-pulse" style="background: var(--gold); box-shadow: 0 0 14px var(--gold);"></span>
+                    BRATZ HOTSPOT ADMIN
+                </h1>
+                <p class="tagline">💋 RouterOS Interface: wlan1-hotspot</p>
+            </div>
+            <button onclick="loadUsers()" class="btn-refresh flex items-center gap-2">
+                🔄 REFRESH DATA
+            </button>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="metric total">
+                <div class="label">Total Registrations</div>
+                <div class="num" id="totalCount">0</div>
+            </div>
+            <div class="metric pending">
+                <div class="label">Pending Approval</div>
+                <div class="num" id="pendingCount">0</div>
+            </div>
+            <div class="metric approved">
+                <div class="label">Approved / Active</div>
+                <div class="num" id="approvedCount">0</div>
+            </div>
+            <div class="metric rejected">
+                <div class="label">Blocked / Rejected</div>
+                <div class="num" id="rejectedCount">0</div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="panel">
+            <div class="spots"></div>
+            <h2>✨ Subscriber Active Session Table ✨</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-800 text-xs text-slate-400 mono">
+                            <th class="p-3">USER & CREDENTIALS</th>
+                            <th class="p-3">CONTACT</th>
+                            <th class="p-3">STATUS</th>
+                            <th class="p-3">DATE REGISTERED</th>
+                            <th class="p-3 text-right">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody" class="text-xs mono">
+                        <tr>
+                            <td colspan="5" class="p-4 text-center msg-empty">Memuat data dari Upstash Redis...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadUsers() {
+            const tableBody = document.getElementById('userTableBody');
+            try {
+                const response = await fetch('/api/users');
+                const data = await response.json();
+
+                if (!data.success || !data.users) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Gagal mengambil data pengguna.</td></tr>`;
+                    return;
+                }
+
+                const users = data.users;
+
+                // Update Counter
+                document.getElementById('totalCount').textContent = users.length;
+                document.getElementById('pendingCount').textContent = users.filter(u => u.status === 'pending').length;
+                document.getElementById('approvedCount').textContent = users.filter(u => u.status === 'approved').length;
+                document.getElementById('rejectedCount').textContent = users.filter(u => u.status === 'rejected').length;
+
+                if (users.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-empty">Belum ada user mendaftar.</td></tr>`;
+                    return;
+                }
+
+                // Render Data Table
+                tableBody.innerHTML = users.map(user => {
+                    let statusBadge = '';
+                    if (user.status === 'approved') {
+                        statusBadge = `<span class="badge badge-ok">ACCEPTED</span>`;
+                    } else if (user.status === 'rejected') {
+                        statusBadge = `<span class="badge badge-no">REJECTED</span>`;
+                    } else {
+                        statusBadge = `<span class="badge badge-wait">PENDING</span>`;
+                    }
+
+                    const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleString('id-ID') : '-';
+
+                    return `
+                        <tr class="row">
+                            <td class="p-3">
+                                <div class="cell-name">${user.name || '-'}</div>
+                                <div class="cell-user">user: ${user.username}</div>
+                            </td>
+                            <td class="p-3 cell-contact">
+                                <div>${user.email || '-'}</div>
+                                <div>${user.phone || '-'}</div>
+                            </td>
+                            <td class="p-3">${statusBadge}</td>
+                            <td class="p-3 cell-date">${dateStr}</td>
+                            <td class="p-3 text-right space-x-2">
+                                ${user.status === 'pending' ? `
+                                    <button onclick="approveUser('${user.username}')" class="act act-approve">APPROVE</button>
+                                    <button onclick="rejectUser('${user.username}')" class="act act-reject">REJECT</button>
+                                ` : ''}
+                                <button onclick="deleteUser('${user.username}')" class="act act-drop">DROP</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error(err);
+                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Terjadi kesalahan koneksi ke API.</td></tr>`;
+            }
+        }
+
+        async function approveUser(username) {
+            if (!confirm(`Setujui pendaftaran ${username}?`)) return;
+            try {
+                const res = await fetch('/api/approve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, adminName: 'Admin' })
+                });
+                const result = await res.json();
+                alert(result.message);
+                loadUsers();
+            } catch (e) {
+                alert('Gagal menyetujui user');
+            }
+        }
+
+        async function rejectUser(username) {
+            if (!confirm(`Tolak pendaftaran ${username}?`)) return;
+            try {
+                const res = await fetch('/api/reject', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, adminName: 'Admin' })
+                });
+                const result = await res.json();
+                alert(result.message);
+                loadUsers();
+            } catch (e) {
+                alert('Gagal menolak user');
+            }
+        }
+
+        async function deleteUser(username) {
+            if (!confirm(`Hapus permanen user ${username}?`)) return;
+            try {
+                const res = await fetch(`/api/users/${username}`, { method: 'DELETE' });
+                const result = await res.json();
+                alert(result.message);
+                loadUsers();
+            } catch (e) {
+                alert('Gagal menghapus user');
+            }
+        }
+
+        // Jalankan saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+</body>
+</html>

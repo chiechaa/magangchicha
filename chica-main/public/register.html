@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Registrasi Akun - Bratz Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff1493;
+            --hot: #ff4fb8;
+            --candy: #ffd1ec;
+            --purple: #5b1a8f;
+            --deep: #2a0a45;
+            --gold: #ffd24a;
+            --cyan: #36e0ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 28px 20px;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--deep);
+            background-image:
+                radial-gradient(circle at 20% 15%, rgba(255, 20, 147, 0.55), transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(54, 224, 255, 0.3), transparent 45%),
+                radial-gradient(rgba(255, 255, 255, 0.35) 1.2px, transparent 1.6px),
+                radial-gradient(rgba(255, 210, 74, 0.35) 1px, transparent 1.4px);
+            background-size: auto, auto, 34px 34px, 52px 52px;
+            background-position: 0 0, 0 0, 0 0, 17px 21px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            padding: 34px 32px 30px;
+            border-radius: 28px;
+            background: linear-gradient(160deg, #7a1fb8 0%, #4a1280 100%);
+            border: 3px solid var(--hot);
+            box-shadow:
+                0 0 0 6px rgba(255, 20, 147, 0.25),
+                0 25px 50px rgba(0, 0, 0, 0.55),
+                0 0 45px rgba(255, 20, 147, 0.45);
+        }
+
+        .spots {
+            position: absolute;
+            top: 0; left: 18px; right: 18px;
+            height: 14px;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background:
+                radial-gradient(ellipse 7px 5px at 12px 7px, #1a0630 55%, transparent 60%) 0 0 / 34px 14px repeat-x,
+                var(--gold);
+            border: 2px solid var(--deep);
+        }
+
+        .terminal-bar { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
+        .dot-red { background: var(--pink); }
+        .dot-yellow { background: var(--gold); }
+        .dot-green { background: var(--cyan); }
+        .terminal-title { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--candy); }
+
+        .header { text-align: center; margin-bottom: 24px; }
+
+        .header h1 {
+            font-family: 'Lilita One', sans-serif;
+            font-weight: 400;
+            font-size: 38px;
+            line-height: 1;
+            letter-spacing: 0.02em;
+            color: #fff;
+            -webkit-text-stroke: 2px var(--deep);
+            paint-order: stroke fill;
+            text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 var(--deep);
+            transform: rotate(-2deg);
+            margin-bottom: 14px;
+        }
+
+        .header p {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 999px;
+            background: var(--gold);
+            color: var(--deep);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .form-group { margin-bottom: 14px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            padding-left: 6px;
+            color: var(--candy);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 18px;
+            background: #fff0f9;
+            border: 2px solid var(--hot);
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--deep);
+            outline: none;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .form-group input::placeholder { color: #b07ac9; font-weight: 500; }
+        .form-group input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(255, 210, 74, 0.5), 0 0 18px rgba(255, 79, 184, 0.7);
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            border: 3px solid #fff;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #ff6ec7 0%, var(--pink) 55%, #d10a78 100%);
+            color: #fff;
+            font-family: 'Lilita One', sans-serif;
+            font-size: 21px;
+            letter-spacing: 0.06em;
+            text-shadow: 0 2px 0 rgba(42, 10, 69, 0.6);
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--deep), 0 10px 22px rgba(255, 20, 147, 0.55);
+            transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease;
+        }
+        .btn:hover { filter: brightness(1.08); }
+        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--deep), 0 4px 12px rgba(255, 20, 147, 0.5); }
+        .btn:disabled { background: #8a6aa6; border-color: #c9b3dc; color: #e6d8f0; text-shadow: none; box-shadow: 0 4px 0 var(--deep); cursor: not-allowed; }
+        .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-top: 16px;
+            display: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .message.success { background: #d9fff0; color: #0a6b45; border: 2px solid #2fd69a; }
+        .message.error { background: #ffe0ec; color: #a10a47; border: 2px solid var(--pink); }
+
+        .login-link { text-align: center; margin-top: 22px; color: var(--candy); font-size: 14px; font-weight: 600; }
+        .login-link a { color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 2px dashed var(--gold); }
+        .login-link a:hover { color: #fff; border-color: #fff; }
+
+        .loading {
+            display: inline-block; width: 14px; height: 14px;
+            border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 50%;
+            border-top-color: #fff; animation: spin 0.8s linear infinite;
+            margin-right: 8px; vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spots"></div>
+
+        <div class="terminal-bar">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+            <div class="terminal-title">💋 hotspot-register</div>
+        </div>
+
+        <div class="header">
+            <h1>Registrasi Akun</h1>
+            <p>✨ Join the Bratz Pack ✨</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" required placeholder="Masukkan nama lengkap">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="Masukkan email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Nomor Telepon</label>
+                <input type="tel" id="phone" required placeholder="Masukkan nomor telepon">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="Masukkan username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Masukkan password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Konfirmasi Password</label>
+                <input type="password" id="confirmPassword" required placeholder="Konfirmasi password">
+            </div>
+            <button type="submit" class="btn" id="submitBtn">
+                <span id="btnText">Daftar Sekarang</span>
+            </button>
+        </form>
+
+        <div class="message" id="message"></div>
+
+        <div class="login-link">
+            Sudah punya akun? <a href="login.html">Login di sini</a>
+        </div>
+    </div>
+
+    <script>
+        // Mengunci langsung ke domain production Vercel yang stabil
+        const BACKEND_URL = 'https://mamat-cyan.vercel.app';
+
+        const form = document.getElementById('registerForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showMessage('Password tidak cocok!', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span> Memproses...';
+            message.style.display = 'none';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, phone, username, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showMessage('Registrasi berhasil! Menunggu persetujuan admin.', 'success');
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = '/login.html?registered=success';
+                    }, 2500);
+                } else {
+                    showMessage(result.message || 'Registrasi gagal.', 'error');
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Daftar Sekarang';
+                }
+            } catch (err) {
+                console.error(err);
+                showMessage('Terjadi kesalahan jaringan.', 'error');
+                submitBtn.disabled = false;
+                btnText.textContent = 'Daftar Sekarang';
+            }
+        });
+
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
