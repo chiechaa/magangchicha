@@ -188,7 +188,7 @@
                     <span class="w-4 h-4 rounded-full animate-pulse" style="background: var(--gold); box-shadow: 0 0 14px var(--gold);"></span>
                     BRATZ HOTSPOT ADMIN
                 </h1>
-                <p class="tagline">💋 RouterOS Interface: wlan1-hotspot</p>
+                <p class="tagline">💋 RouterOS Interface: wlan1-hotspot (Realtime Stats)</p>
             </div>
             <button onclick="loadUsers()" class="btn-refresh flex items-center gap-2">
                 🔄 REFRESH DATA
@@ -218,7 +218,7 @@
         <!-- Table Section -->
         <div class="panel">
             <div class="spots"></div>
-            <h2>✨ Subscriber Active Session Table ✨</h2>
+            <h2>✨ Subscriber Active Session & Realtime Traffic ✨</h2>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -227,13 +227,14 @@
                             <th class="p-3">USER & CREDENTIALS</th>
                             <th class="p-3">CONTACT</th>
                             <th class="p-3">STATUS</th>
-                            <th class="p-3">DATE REGISTERED</th>
+                            <th class="p-3">TRAFFIC (IN / OUT)</th>
+                            <th class="p-3">UPTIME</th>
                             <th class="p-3 text-right">ACTIONS</th>
                         </tr>
                     </thead>
                     <tbody id="userTableBody" class="text-xs mono">
                         <tr>
-                            <td colspan="5" class="p-4 text-center msg-empty">Memuat data dari Upstash Redis...</td>
+                            <td colspan="6" class="p-4 text-center msg-empty">Memuat data dari MikroTik & Upstash Redis...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,6 +243,15 @@
     </div>
 
     <script>
+        // Fungsi helper untuk mengubah byte mentah ke format MB/GB agar mudah dibaca
+        function formatBytes(bytes) {
+            if (bytes === 0 || isNaN(bytes)) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
         async function loadUsers() {
             const tableBody = document.getElementById('userTableBody');
             try {
@@ -249,7 +259,7 @@
                 const data = await response.json();
 
                 if (!data.success || !data.users) {
-                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Gagal mengambil data pengguna.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center msg-error">Gagal mengambil data pengguna.</td></tr>`;
                     return;
                 }
 
@@ -262,11 +272,11 @@
                 document.getElementById('rejectedCount').textContent = users.filter(u => u.status === 'rejected').length;
 
                 if (users.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-empty">Belum ada user mendaftar.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center msg-empty">Belum ada user mendaftar.</td></tr>`;
                     return;
                 }
 
-                // Render Data Table
+                // Render Data Table dengan Statistik Realtime Trafik MikroTik
                 tableBody.innerHTML = users.map(user => {
                     let statusBadge = '';
                     if (user.status === 'approved') {
@@ -277,7 +287,9 @@
                         statusBadge = `<span class="badge badge-wait">PENDING</span>`;
                     }
 
-                    const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleString('id-ID') : '-';
+                    const bytesIn = formatBytes(user.bytesIn || 0);
+                    const bytesOut = formatBytes(user.bytesOut || 0);
+                    const uptime = user.uptime && user.uptime !== 'Off' ? user.uptime : '<span style="color: #94a3b8;">Offline</span>';
 
                     return `
                         <tr class="row">
@@ -290,7 +302,11 @@
                                 <div>${user.phone || '-'}</div>
                             </td>
                             <td class="p-3">${statusBadge}</td>
-                            <td class="p-3 cell-date">${dateStr}</td>
+                            <td class="p-3">
+                                <div style="color: var(--cyan);">📥 In: ${bytesIn}</div>
+                                <div style="color: var(--gold);">📤 Out: ${bytesOut}</div>
+                            </td>
+                            <td class="p-3" style="color: var(--mint); font-weight: bold;">${uptime}</td>
                             <td class="p-3 text-right space-x-2">
                                 ${user.status === 'pending' ? `
                                     <button onclick="approveUser('${user.username}')" class="act act-approve">APPROVE</button>
@@ -304,7 +320,7 @@
 
             } catch (err) {
                 console.error(err);
-                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center msg-error">Terjadi kesalahan koneksi ke API.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center msg-error">Terjadi kesalahan koneksi ke API.</td></tr>`;
             }
         }
 
@@ -353,7 +369,11 @@
         }
 
         // Jalankan saat halaman selesai dimuat
-        document.addEventListener('DOMContentLoaded', loadUsers);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsers();
+            // Auto-refresh statistik trafik secara realtime setiap 5 detik
+            setInterval(loadUsers, 5000);
+        });
     </script>
 </body>
 </html>
